@@ -8,7 +8,7 @@ module.exports = {
       const results = await getReview(product_id)
         let response =  {
           product: product_id,
-          count: results.length,
+          count: results.rows.length,
           results: results.rows
         }
         res.send(response)
