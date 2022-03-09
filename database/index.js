@@ -23,19 +23,3 @@ const pool = new Pool ({
 // })().catch(err => console.log(err.stack))
 
 module.exports = pool;
-
-// const {Client} = require ('pg');
-
-// ;(async () => {
-//   const client = new Client({
-//     host: 'localhost',
-//     port: 5432,
-//     user: 'alexnorvani',
-//     database: 'reviews',
-//     ssl: true
-//   });
-//   await client.connect();
-//   const res = await client.query('SELECT $1::text as connected', ['Connection to postgres successful!'] );
-//   console.log(res.rows[0].connected);
-//   await client.end()
-// })();
