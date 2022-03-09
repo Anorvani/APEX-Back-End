@@ -2,28 +2,49 @@ const pool = require('./index.js');
 
 
 const getReview = async (product_id, page, count, sort) => {
-  // let sorter;
-  // switch (sort) {
-  //   case 'newest':
-  //     sorter = 'date DESC';
-  //     break;
-  //   case 'helpful':
-  //     sorter = 'helpfulness DESC';
-  //     break;
-  //   default:
-  //     sorter = 'helpfulness DESC, date DESC';
-  //     break;
-  // }
-  let query1 = `select array_agg
-  (json_build_object('review_id', review_id, 'rating', rating, 'summary', summary, 'recommended', recommended, 'response', response, 'body', body, 'date', (to_timestamp(date/1000)::date), 'reviewer_name', reviewer_name, 'helpfulness', helpfulness, 'photos', (select coalesce(array_agg(json_build_object('id', photo_id, 'url', url)), '{}')
-  as photos from photos where reviews.review_id = photos.review_id)
-  ))
-  as results from reviews where product_id=$1 and reported=false`;
+  let sorter;
+  switch (sort) {
+    case 'newest':
+      sorter = 'date ASC';
+      break;
+    case 'helpful':
+      sorter = 'helpfulness DESC';
+      break;
+    default:
+      sorter = 'helpfulness DESC, date ASC';
+      break;
+  }
+  let query1 = `select json_build_object
+    ('review_id', review_id, 'rating', rating, 'summary', summary, 'recommended', recommended, 'response', response, 'body', body, 'date', (to_timestamp(date/1000)::date), 'reviewer_name', reviewer_name, 'helpfulness', helpfulness,
+    'photos', (select coalesce (array_agg(json_build_object('id', photo_id, 'url', url)), '{}')
+    as photos from photos where reviews.review_id = photos.review_id))
+    from reviews where (product_id=$1) and (reported=false) order by ${sorter} LIMIT $2 OFFSET ${count * page - count}`;
 
-  const result = await pool.query(query1, [product_id])
-  console.log(result)
+//   const result = await pool.query(`SELECT
+//   json_build_object(
+//     'review_id', r.review_id,
+//     'rating', r.rating,
+//     'summary', r.summary,
+//     'recommend', r.recommended,
+//     'response', r.response,
+//     'body', r.body,
+//     'date', to_char(to_timestamp(r.date), 'DD-MM-YYYY"T"HH24:MI:SS.MS"Z"'),
+//     'reviewer_name', r.reviewer_name,
+//     'helpfulness', r.helpfulness,
+//     'photos',
+//     (SELECT coalesce
+//       (array_agg
+//         (json_build_object(
+//           'id', p.photo_id,
+//           'url', p.url)),
+//           '{}')
+//     AS photos FROM photos p WHERE r.review_id = p.review_id)
+//   )
+// FROM reviews r WHERE product_id = $1 AND reported = false order by ${sorter} LIMIT $2 OFFSET ${count * page - count}`, [product_id, count])
 
-  return result;
+const results = await pool.query(query1, [product_id, count])
+
+  return results;
 }
 
 const postReview = async (

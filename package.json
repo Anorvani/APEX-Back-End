@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "k6 run script.js",
+    "build": "psql -d reviews -f database/schema.sql"
   },
   "author": "Alex",
   "license": "ISC",

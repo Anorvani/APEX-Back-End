@@ -3,14 +3,18 @@ const pool = require('../database/index.js')
 
 module.exports = {
   getReviews: async (req, res) => {
-    const { product_id, page, count, sort } = req.query;
+    //const {page, count, sort = "relevant", product_id } = req.query;
+    const { product_id } = req.query;
+    const count = req.query.count || 5;
+    const page = req.query.page || 1;
+    const sort = req.query.sort || 'relevant';
     try {
       const results = await getReview(product_id, page, count, sort)
         let response =  {
           product: product_id,
           page: page,
-          count: count,
-          results: results.rows[0].results
+          count: results.rows.length,
+          results: results.rows.map(row => {return row.json_build_object})
         }
         res.send(response)
     }

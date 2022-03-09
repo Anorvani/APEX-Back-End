@@ -75,12 +75,12 @@ FROM '/Users/alexnorvani/SDC/reviews_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
--- create index review_index on reviews(product_id);
--- create index photo_review_index on photos using btree(review_id);
--- create index characteristic_index on characteristics(product_id);
--- create index characteristic_id_index on characteristics(characteristic_id);
--- create index characteristics_review_index on characteristic_reviews(review_id);
--- create index characteristic_review_id_index on characteristic_reviews using btree(characteristic_id);
+create index review_index on reviews(product_id);
+create index photo_review_index on photos using btree(review_id);
+create index characteristic_index on characteristics(product_id);
+-- create index characteristic_id_index on characteristics(char_id);
+create index characteristics_review_index on characteristic_review(review_id);
+create index characteristic_review_id_index on characteristic_review using btree(characteristic_id);
 
 select setval(pg_get_serial_sequence('reviews', 'review_id'),(select max(review_id) from reviews)+1);
 select setval(pg_get_serial_sequence('photos', 'photo_id'),(select max(photo_id) from photos)+1);
