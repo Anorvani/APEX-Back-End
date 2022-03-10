@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "test": "k6 run script.js",
-    "build": "sudo -u postgres psql -d reviews -f database/schema.sql"
+    "build": "psql -d reviews -f database/schema.sql",
+    "build-ec2": "sudo -u postgres psql -f ./database/schema.sql"
   },
   "author": "Alex",
   "license": "ISC",
