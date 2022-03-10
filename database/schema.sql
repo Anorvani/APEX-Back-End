@@ -1,7 +1,3 @@
--- DROP DATABASE if EXISTS alex;
--- CREATE DATABASE alex;
-
--- \c alex;
 
 DROP TABLE IF EXISTS reviews;
 -- DROP TABLE IF EXISTS metaData;
