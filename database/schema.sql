@@ -51,27 +51,23 @@ CREATE TABLE photos (
   url VARCHAR(1000)
 );
 
-\set localpath `pwd` '/data/reviews.csv'
 COPY reviews (review_id, product_id, rating, date, summary, body, recommended, reported, reviewer_name, reviewer_email, response, helpfulness)
-FROM :'localpath'
+FROM '/Users/alexnorvani/SDC-Info/SDC/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
-\set localpath `pwd` '/data/characteristic_reviews.csv'
 COPY characteristic_review (cr_id, characteristic_id, review_id, value)
-FROM :'localpath'
+FROM '/Users/alexnorvani/SDC-Info/SDC/reviews.csv'
 DELIMITER ','
 CSV HEADER;
 
-\set localpath `pwd` '/data/characteristics.csv'
 COPY characteristics (char_id, product_id, name)
-FROM :'localpath'
+FROM '/Users/alexnorvani/SDC-Info/SDC/characteristics.csv'
 DELIMITER ','
 CSV HEADER;
 
-\set localpath `pwd` '/data/reviews_photos.csv'
 COPY photos (photo_id, review_id, url)
-FROM :'localpath'
+FROM '/Users/alexnorvani/SDC-Info/SDC/reviews_photos.csv'
 DELIMITER ','
 CSV HEADER;
 
