@@ -9,17 +9,4 @@ const pool = new Pool ({
   password: process.env.PASSWORD
 })
 
-// ;(async function() {
-//   const client = await pool.connect()
-//   await client.query('SELECT NOW()')
-//   client.release()
-  // try {
-  //   const res = await client.query('SELECT * FROM reviews')
-  //   console.log(res.rows)
-  // }
-  // finally {
-  //   client.release()
-  // }
-// })().catch(err => console.log(err.stack))
-
 module.exports = pool;

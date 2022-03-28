@@ -3,7 +3,6 @@ const pool = require('../database/index.js')
 
 module.exports = {
   getReviews: async (req, res) => {
-    //const {page, count, sort = "relevant", product_id } = req.query;
     const { product_id } = req.query;
     const count = req.query.count || 5;
     const page = req.query.page || 1;
@@ -41,10 +40,6 @@ module.exports = {
     const { product_id } = req.query;
     try {
       const results = await getMetaData(product_id);
-      // let response = {
-      //   product_id,
-      //   results: results.rows[0]
-      // }
       res.status(200).send(results.rows[0])
     }
     catch (err) {
