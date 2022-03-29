@@ -17,9 +17,6 @@ while optimizing to handle over 2500 request per second
 * [Data Shape](#overview-of-data-shape)
 
 # Testing
-* Testing Locally
-   ![ScreenShot](/Screenshots/Testing-1.png)
-
 * Testing EC2 w/LoaderIO
     ![ScreenShot](/Screenshots/Testing.png)
 

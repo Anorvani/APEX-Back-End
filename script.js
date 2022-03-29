@@ -13,8 +13,8 @@ import { Counter } from 'k6/metrics';
 export const requests = new Counter('http_reqs');
 
 export const options = {
-  vus: 100,
-  duration: '15s',
+  vus: 200,
+  duration: '60s',
 };
 
 const randomNumber = (max, min) => (
@@ -22,7 +22,7 @@ const randomNumber = (max, min) => (
 );
 let count = randomNumber(100000, 1);
 // const url = `http://localhost:8080/api/reviews/?product_id=${count}`;
-const url = `http://localhost:8080/api/reviews/meta?product_id=${count}`;
+const url = `http://localhost:3000/api/reviews/meta?product_id=${count}`;
 // const url = `http://localhost:8080/api/reviews?review_id=${count}/helpful`;
 // const url = `http://localhost:8080/api/reviews?review_id=${count}/report`;
 
